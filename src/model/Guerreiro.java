@@ -26,4 +26,8 @@ public class Guerreiro extends Pessoa {
                 + ", isSexo()=" + isSexo() + ", getPontosDeVida()=" + getPontosDeVida() + "]";
     }
 
+    public void atacar() {
+        this.dano(10);
+    }
+
 }
