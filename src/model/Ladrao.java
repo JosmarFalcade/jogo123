@@ -31,4 +31,8 @@ public class Ladrao extends Pessoa {
                 + ", getPontosDeVida()=" + getPontosDeVida() + "]";
     }
 
+    public void setPlanoDeFuga(String planoDeFuga) {
+        this.planoDeFuga = planoDeFuga;
+    }
+
 }

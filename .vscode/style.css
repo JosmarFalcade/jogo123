@@ -1,0 +1,11 @@
+body{
+    pointer-events: auto;
+    background-size: 100%;
+    background-position: 0 0;
+    background-image: url(https://img.redbull.com/images/c_crop,x_0,y_0,h_666,w_1480/c_fill,w_1950,h_864/q_auto,f_auto/redbullcom/2017/12/16/dc6e772c-12ea-453a-be62-8d0daf7a7a90/cristianoronaldo)
+    content: '';
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    background-repeat: no-repeat;
+}
