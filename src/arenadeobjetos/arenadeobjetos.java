@@ -86,7 +86,8 @@ public class arenadeobjetos {
                 System.out.println("Lista de personagens");
                 System.out.println(guerreiros.toString());
                 System.out.println(ladrões.toString());
-                System.out.println("Lista bonita");
+                System.out.println(vitimas.toString());
+                System.out.println("Lista de atributos");
                 for (Guerreiro g : guerreiros) {
                     System.out.println("Guerreiro: " + g.getNome());
                     System.out.println("\tArmamento: " + g.getArmamento());
@@ -96,6 +97,10 @@ public class arenadeobjetos {
                     System.out.println("Ladrão: " + ladrao.getNome());
                     System.out.println("\tPlano de fuga: " + ladrao.getPlanoDeFuga());
                     System.out.println("\tPontos de vida: " + ladrao.getPontosDeVida());
+                }
+                for (Pessoa vitima : vitimas) {
+                    System.out.println("Vitima: " + vitima.getNome());
+                    System.out.println("\tPontos de vida: " + vitima.getPontosDeVida());
                 }
                 break;
             case 3:
@@ -162,6 +167,27 @@ public class arenadeobjetos {
                 ladrões.add(ladrao);
                 break;
             case 3:
+                System.out.println("Criar Pessoa");
+                Pessoa vitima = new Pessoa();
+                System.out.println("Informe o nome da Pessoa: ");
+                vitima.setNome(ler.nextLine());
+                System.out.println("Informe a cor do olho: ");
+                vitima.setOlho(ler.nextLine());
+                System.out.println("Informe a cor do cabelo: ");
+                vitima.setCabelo(ler.nextLine());
+                System.out.println("Informe a cor da pele: ");
+                vitima.setPele(ler.nextLine());
+                System.out.println("Informe o sexo: "
+                        + "\n0 - Feminino"
+                        + "\n1 - Masculino"
+                        + "\nDigite aqui: ");
+                int sexovInt = lerInt();
+                boolean sexov = false;
+                if (sexovInt == 1) {
+                    sexov = true;// masculino
+                }
+                vitima.setSexo(sexov);
+                vitimas.add(vitima);
                 break;
             default:
                 System.out.println("Opção invalida, tente novamente");
