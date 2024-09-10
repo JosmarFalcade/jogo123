@@ -6,6 +6,8 @@ import java.util.Scanner;
 import model.Guerreiro;
 import model.Ladrao;
 import model.Pessoa;
+import servicos.ServicosFactory;
+import servicos.VitimaServicos;
 
 public class arenadeobjetos {
     static Scanner ler = new Scanner(System.in);
@@ -55,7 +57,6 @@ public class arenadeobjetos {
             menuP();
             subMenuP(opMP);
         } while (opMP != 0);
-
     }
 
     public static void menuP() {
@@ -188,6 +189,8 @@ public class arenadeobjetos {
                 }
                 vitima.setSexo(sexov);
                 vitimas.add(vitima);
+                VitimaServicos vs = ServicosFactory.getVitimaServicos();
+                vs.cadastrarVitima(vitima);
                 break;
             default:
                 System.out.println("Opção invalida, tente novamente");
