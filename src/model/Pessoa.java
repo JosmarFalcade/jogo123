@@ -7,6 +7,8 @@ public class Pessoa {
     private String pele;
     private boolean sexo;
     private int pontosDeVida = 100;
+    private int id;
+    
 
     public Pessoa() {
     }
@@ -17,6 +19,7 @@ public class Pessoa {
         this.olho = olho;
         this.pele = pele;
         this.sexo = sexo;
+        
     }
 
     public String getNome() {
@@ -73,15 +76,30 @@ public class Pessoa {
                 + ", pontosDeVida=" + pontosDeVida + "]";
     }
 
-    public void dano(int dano) {
-        this.pontosDeVida = this.pontosDeVida - dano;
+    public void dano(int dano){
+    this.pontosDeVida = this.pontosDeVida - dano;
+
+
     }
 
-    public boolean gameOver() {
-        if (this.pontosDeVida <= 0) {
+    public boolean gameOver(){
+        if (this.pontosDeVida <= 0){
             return true;
-        } else {
+            
+        }else{
             return false;
         }
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    
+
+
 }

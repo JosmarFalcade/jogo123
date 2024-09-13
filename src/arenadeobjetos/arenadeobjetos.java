@@ -7,7 +7,7 @@ import model.Guerreiro;
 import model.Ladrao;
 import model.Pessoa;
 import servicos.ServicosFactory;
-import servicos.VitimaServicos;
+import servicos.VitimasServicos;
 
 public class arenadeobjetos {
     static Scanner ler = new Scanner(System.in);
@@ -57,6 +57,7 @@ public class arenadeobjetos {
             menuP();
             subMenuP(opMP);
         } while (opMP != 0);
+
     }
 
     public static void menuP() {
@@ -88,7 +89,7 @@ public class arenadeobjetos {
                 System.out.println(guerreiros.toString());
                 System.out.println(ladrões.toString());
                 System.out.println(vitimas.toString());
-                System.out.println("Lista de atributos");
+                System.out.println("Lista bonita");
                 for (Guerreiro g : guerreiros) {
                     System.out.println("Guerreiro: " + g.getNome());
                     System.out.println("\tArmamento: " + g.getArmamento());
@@ -100,9 +101,26 @@ public class arenadeobjetos {
                     System.out.println("\tPontos de vida: " + ladrao.getPontosDeVida());
                 }
                 for (Pessoa vitima : vitimas) {
-                    System.out.println("Vitima: " + vitima.getNome());
+                    System.out.println("Vítima: " + vitima.getNome());
+
                     System.out.println("\tPontos de vida: " + vitima.getPontosDeVida());
                 }
+                System.out.println("-- Vitimas do Banco de Dados --");
+                VitimasServicos vs = ServicosFactory.getVitimaServicos();
+                System.out.println(vs.listaVitimas().toString());
+
+                System.out.println("-- Teste de Busca por nome Diego Cervosul --");
+                System.out.println(vs.buscaVitimaByNome("%Diego Cervosul%").toString());
+
+                //Teste de Update
+                //Busca Vitima
+                Pessoa vUp = vs.buscaVitimaByNome("%Diego Cervosul%");
+                //Atualiza a cor do cabelo
+                vUp.setCabelo("Preto");
+                //Executa a atualização no banco
+                vs.atualizarVitima(vUp);
+                System.out.println("--Vitima atualizada--");
+                System.out.println(vs.buscaVitimaByNome("%Diego Cervosul%").toString());
                 break;
             case 3:
                 break;
@@ -168,9 +186,9 @@ public class arenadeobjetos {
                 ladrões.add(ladrao);
                 break;
             case 3:
-                System.out.println("Criar Pessoa");
+                System.out.println("Criar Vítima");
                 Pessoa vitima = new Pessoa();
-                System.out.println("Informe o nome da Pessoa: ");
+                System.out.println("Informe o nome do Vítima: ");
                 vitima.setNome(ler.nextLine());
                 System.out.println("Informe a cor do olho: ");
                 vitima.setOlho(ler.nextLine());
@@ -188,10 +206,11 @@ public class arenadeobjetos {
                     sexov = true;// masculino
                 }
                 vitima.setSexo(sexov);
+
                 vitimas.add(vitima);
-                VitimaServicos vs = ServicosFactory.getVitimaServicos();
                 vs.cadastrarVitima(vitima);
                 break;
+
             default:
                 System.out.println("Opção invalida, tente novamente");
                 subMenuP(opMP);

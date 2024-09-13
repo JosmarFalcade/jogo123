@@ -1,9 +1,9 @@
 package servicos;
 
 public class ServicosFactory {
-    private static VitimaServicos vitimaS = new VitimaServicos();
+    private static VitimasServicos vitimaS = new VitimasServicos();
 
-    public static VitimaServicos getVitimaServicos(){
+    public static VitimasServicos getVitimaServicos(){
         return vitimaS;
     }
 
