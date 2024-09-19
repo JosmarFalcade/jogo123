@@ -45,6 +45,7 @@ public class LadraoDAO {
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 Ladrao l = new Ladrao();
+                l.setId(rs.getInt("id"));
                 l.setNome(rs.getString("nome"));
                 l.setCabelo(rs.getString("cabelo"));
                 l.setOlho(rs.getString("olho"));

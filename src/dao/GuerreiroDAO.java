@@ -45,6 +45,7 @@ public class GuerreiroDAO {
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 Guerreiro g = new Guerreiro();
+                g.setId(rs.getInt("id"));
                 g.setNome(rs.getString("nome"));
                 g.setCabelo(rs.getString("cabelo"));
                 g.setOlho(rs.getString("olho"));

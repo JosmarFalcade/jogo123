@@ -45,6 +45,7 @@ public class VitimaDAO {
             ResultSet rs = pst.executeQuery();
             while (rs.next()) {
                 Pessoa v = new Pessoa();
+                v.setId(rs.getInt("id"));
                 v.setNome(rs.getString("nome"));
                 v.setCabelo(rs.getString("cabelo"));
                 v.setOlho(rs.getString("olho"));
