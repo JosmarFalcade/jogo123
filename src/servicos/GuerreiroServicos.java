@@ -15,11 +15,15 @@ public class GuerreiroServicos {
     }
 
     public ArrayList<Guerreiro> listaGuerreiros() {
-        return gDAO.getGuerreiro();
+        return gDAO.getGuerreiros();
     }
 
     public Guerreiro buscaGuerreiroByNome(String nome) {
         return gDAO.getGuerreiroByNome(nome);
+    }
+
+    public Guerreiro getGuerreiroById(int id) {
+        return gDAO.getGuerreiroById(id);
     }
 
     public void atualizarGuerreiro(Guerreiro gVO) {

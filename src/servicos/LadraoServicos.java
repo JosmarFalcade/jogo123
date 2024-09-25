@@ -21,6 +21,10 @@ public class LadraoServicos {
     public Ladrao buscaLadraoByNome(String nome) {
         return lDAO.getLadraoByNome(nome);
     }
+    
+     public Ladrao getLadraoById(int id) {
+        return lDAO.getLadraoById(id);
+    }
 
     public void atualizarLadrao(Ladrao lVO) {
         lDAO.atualizarLadrao(lVO);

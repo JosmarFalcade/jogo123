@@ -7,75 +7,77 @@ package view;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Pessoa;
+import model.Guerreiro;
 import servicos.ServicosFactory;
-import servicos.VitimasServicos;
+import servicos.GuerreiroServicos;
 
 /**
  *
  * @author 182310075
  */
-public class JFVitima extends javax.swing.JFrame {
+public class JFGuerreiro extends javax.swing.JFrame {
+
+    int idEdit;
 
     /**
-     * Creates new form JFVitima
+     * Creates new form JFGuerreiro
      */
-    public JFVitima() {
+    public JFGuerreiro() {
         initComponents();
         addRowToTable();
-        jbEditarVitima.setVisible(false);
-        jbDeletarVitima.setVisible(false);
+        jbEditarGuerreiro.setVisible(false);
+        jbDeletarGuerreiro.setVisible(false);
     }
-    
+
     public void addRowToTable() {
         //pega a modelagem da tabela na interface grafica
-        DefaultTableModel model = (DefaultTableModel) jtVitimas.getModel();
+        DefaultTableModel model = (DefaultTableModel) jtGuerreiros.getModel();
         model.getDataVector().removeAllElements();//remove as linhas da tabela
         model.fireTableDataChanged();
         Object rowData[] = new Object[5];//cria vetor de 5 posicoes que corresponde as colunas da tabela
-        VitimasServicos vitimaS = ServicosFactory.getVitimaServicos();//percorre lista e popula vetor e add vetor a tabela
-        for (Pessoa vitima : vitimaS.listaVitimas()) {
-            rowData[0] = vitima.getId();
-            rowData[1] = vitima.getNome();
-            rowData[2] = vitima.getOlho();
-            rowData[3] = vitima.isSexo() == false ? "Feminino" : "Masculino"; //if Ternary Operator
-            rowData[4] = vitima.getPontosDeVida();
+        GuerreiroServicos guerreiroS = ServicosFactory.getGuerreiroServicos();//percorre lista e popula vetor e add vetor a tabela
+        for (Guerreiro guerreiro : guerreiroS.listaGuerreiros()) {
+            rowData[0] = guerreiro.getId();
+            rowData[1] = guerreiro.getNome();
+            rowData[2] = guerreiro.getOlho();
+            rowData[3] = guerreiro.isSexo() == false ? "Feminino" : "Masculino"; //if Ternary Operator
+            rowData[4] = guerreiro.getPontosDeVida();
             model.addRow(rowData);
         }
     }
-    
+
     private void limpaCampos() {
-        jtfNomeVitima.setText("");
-        jtfCabeloVitima.setText("");
-        jtfOlhoVitima.setText("");
-        jtfPeleVitima.setText("");
-        bgSexoVitima.clearSelection();
-        jtfNomeVitima.requestFocus();
+        jtfNomeGuerreiro.setText("");
+        jtfCabeloGuerreiro.setText("");
+        jtfOlhoGuerreiro.setText("");
+        jtfPeleGuerreiro.setText("");
+        bgSexoGuerreiro.clearSelection();
+        jtfNomeGuerreiro.requestFocus();
     }
-    
+
     private boolean validaInputs() {
-        if (jtfNomeVitima.getText().equals("")) {
+        if (jtfNomeGuerreiro.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Preecher o nome");
-            jtfNomeVitima.requestFocus();
+            jtfNomeGuerreiro.requestFocus();
             return false;
         }
-        if (jtfCabeloVitima.getText().equals("")) {
+        if (jtfCabeloGuerreiro.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Preecher o cabelo");
-            jtfCabeloVitima.requestFocus();
+            jtfCabeloGuerreiro.requestFocus();
             return false;
         }
-        if (jtfOlhoVitima.getText().equals("")) {
+        if (jtfOlhoGuerreiro.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Preecher o olho");
-            jtfOlhoVitima.requestFocus();
+            jtfOlhoGuerreiro.requestFocus();
             return false;
         }
-        if (jtfPeleVitima.getText().equals("")) {
+        if (jtfPeleGuerreiro.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Preecher a pele");
-            jtfPeleVitima.requestFocus();
+            jtfPeleGuerreiro.requestFocus();
             return false;
         }
-        if (!jrbFemininoVitima.isSelected()
-                && !jrbMasculinoVitima.isSelected()) {
+        if (!jrbFemininoGuerreiro.isSelected()
+                && !jrbMasculinoGuerreiro.isSelected()) {
             JOptionPane.showMessageDialog(this, "Selecionar Sexo");
             return false;
         }
@@ -91,31 +93,33 @@ public class JFVitima extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bgSexoVitima = new javax.swing.ButtonGroup();
+        bgSexoGuerreiro = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        jtfNomeVitima = new javax.swing.JTextField();
+        jtfNomeGuerreiro = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jtfCabeloVitima = new javax.swing.JTextField();
+        jtfCabeloGuerreiro = new javax.swing.JTextField();
         Olho = new javax.swing.JLabel();
-        jtfOlhoVitima = new javax.swing.JTextField();
+        jtfOlhoGuerreiro = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jtfPeleVitima = new javax.swing.JTextField();
+        jtfPeleGuerreiro = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jrbFemininoVitima = new javax.swing.JRadioButton();
-        jrbMasculinoVitima = new javax.swing.JRadioButton();
-        jLabel6 = new javax.swing.JLabel();
-        jbSalvarVitima = new javax.swing.JButton();
-        jbLimparVitima = new javax.swing.JButton();
+        jrbFemininoGuerreiro = new javax.swing.JRadioButton();
+        jrbMasculinoGuerreiro = new javax.swing.JRadioButton();
+        jLSexoGuerreiro = new javax.swing.JLabel();
+        jbSalvarGuerreiro = new javax.swing.JButton();
+        jbLimparGuerreiro = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        jbDeletarVitima = new javax.swing.JButton();
-        jbEditarVitima = new javax.swing.JButton();
+        jbDeletarGuerreiro = new javax.swing.JButton();
+        jbEditarGuerreiro = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jtfArmamento = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jtVitimas = new javax.swing.JTable();
+        jtGuerreiros = new javax.swing.JTable();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -134,56 +138,63 @@ public class JFVitima extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Cadastro de Vitima");
+        jLabel1.setText("Cadastro de Guerreiro");
 
         jLabel2.setText("Nome");
 
-        jtfNomeVitima.setName("jtfNomeVitima"); // NOI18N
+        jtfNomeGuerreiro.setName("jtfNomeGuerreiro"); // NOI18N
 
         jLabel3.setText("Cabelo");
 
-        jtfCabeloVitima.setName("jtfCabeloVitima"); // NOI18N
+        jtfCabeloGuerreiro.setName("jtfCabeloGuerreiro"); // NOI18N
 
         Olho.setText("Olho");
 
-        jtfOlhoVitima.addActionListener(new java.awt.event.ActionListener() {
+        jtfOlhoGuerreiro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfOlhoVitimaActionPerformed(evt);
+                jtfOlhoGuerreiroActionPerformed(evt);
             }
         });
 
         jLabel4.setText("Pele");
 
-        bgSexoVitima.add(jrbFemininoVitima);
-        jrbFemininoVitima.setText("Feminino");
+        bgSexoGuerreiro.add(jrbFemininoGuerreiro);
+        jrbFemininoGuerreiro.setText("Feminino");
 
-        bgSexoVitima.add(jrbMasculinoVitima);
-        jrbMasculinoVitima.setText("Masculino");
+        bgSexoGuerreiro.add(jrbMasculinoGuerreiro);
+        jrbMasculinoGuerreiro.setText("Masculino");
 
-        jLabel6.setText("Sexo");
+        jLSexoGuerreiro.setText("Sexo");
 
-        jbSalvarVitima.setText("Salvar");
-        jbSalvarVitima.addActionListener(new java.awt.event.ActionListener() {
+        jbSalvarGuerreiro.setText("Salvar");
+        jbSalvarGuerreiro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbSalvarVitimaActionPerformed(evt);
+                jbSalvarGuerreiroActionPerformed(evt);
             }
         });
 
-        jbLimparVitima.setText("Limpar");
-        jbLimparVitima.addActionListener(new java.awt.event.ActionListener() {
+        jbLimparGuerreiro.setText("Limpar");
+        jbLimparGuerreiro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbLimparVitimaActionPerformed(evt);
+                jbLimparGuerreiroActionPerformed(evt);
             }
         });
 
-        jbDeletarVitima.setText("Deletar");
-        jbDeletarVitima.addActionListener(new java.awt.event.ActionListener() {
+        jbDeletarGuerreiro.setText("Deletar");
+        jbDeletarGuerreiro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jbDeletarVitimaActionPerformed(evt);
+                jbDeletarGuerreiroActionPerformed(evt);
             }
         });
 
-        jbEditarVitima.setText("Editar");
+        jbEditarGuerreiro.setText("Editar");
+        jbEditarGuerreiro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbEditarGuerreiroActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setText("Armamento");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -196,43 +207,45 @@ public class JFVitima extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jtfPeleVitima, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                            .addComponent(jtfCabeloVitima))
+                            .addComponent(jtfPeleGuerreiro, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                            .addComponent(jtfCabeloGuerreiro)
+                            .addComponent(jtfArmamento, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Olho)
-                            .addComponent(jLabel6))
+                            .addComponent(jLSexoGuerreiro))
                         .addGap(14, 14, 14)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jrbFemininoVitima)
+                                .addComponent(jrbFemininoGuerreiro)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel5)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
-                                .addComponent(jtfOlhoVitima, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtfOlhoGuerreiro, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jrbMasculinoVitima)
+                                .addComponent(jrbMasculinoGuerreiro)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jtfNomeVitima, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtfNomeGuerreiro, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jbEditarVitima, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbEditarGuerreiro, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbDeletarVitima, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbDeletarGuerreiro, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbLimparVitima, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbLimparGuerreiro, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jbSalvarVitima, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jbSalvarGuerreiro, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(22, 22, 22))))
             .addComponent(jSeparator2)
         );
@@ -245,45 +258,48 @@ public class JFVitima extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jtfNomeVitima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfNomeGuerreiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jtfCabeloVitima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfCabeloGuerreiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Olho)
-                    .addComponent(jtfOlhoVitima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfOlhoGuerreiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jtfPeleVitima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfPeleGuerreiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jrbFemininoVitima)
-                    .addComponent(jLabel6))
+                    .addComponent(jrbFemininoGuerreiro)
+                    .addComponent(jLSexoGuerreiro))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jrbMasculinoVitima)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jrbMasculinoGuerreiro)
+                    .addComponent(jLabel6)
+                    .addComponent(jtfArmamento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbSalvarVitima)
-                    .addComponent(jbLimparVitima)
-                    .addComponent(jbDeletarVitima)
-                    .addComponent(jbEditarVitima))
+                    .addComponent(jbSalvarGuerreiro)
+                    .addComponent(jbLimparGuerreiro)
+                    .addComponent(jbDeletarGuerreiro)
+                    .addComponent(jbEditarGuerreiro))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jtVitimas.setModel(new javax.swing.table.DefaultTableModel(
+        jtGuerreiros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Nome", "Olho", "Sexo", "HP"
+                "Id", "Nome", "Olho", "Sexo", "Armamento", "HP"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -294,31 +310,30 @@ public class JFVitima extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jtVitimas.addMouseListener(new java.awt.event.MouseAdapter() {
+        jtGuerreiros.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jtVitimasMouseClicked(evt);
+                jtGuerreirosMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jtVitimas);
-        if (jtVitimas.getColumnModel().getColumnCount() > 0) {
-            jtVitimas.getColumnModel().getColumn(0).setResizable(false);
-            jtVitimas.getColumnModel().getColumn(1).setResizable(false);
-            jtVitimas.getColumnModel().getColumn(2).setResizable(false);
-            jtVitimas.getColumnModel().getColumn(3).setResizable(false);
-            jtVitimas.getColumnModel().getColumn(4).setResizable(false);
+        jScrollPane2.setViewportView(jtGuerreiros);
+        if (jtGuerreiros.getColumnModel().getColumnCount() > 0) {
+            jtGuerreiros.getColumnModel().getColumn(0).setResizable(false);
+            jtGuerreiros.getColumnModel().getColumn(1).setResizable(false);
+            jtGuerreiros.getColumnModel().getColumn(2).setResizable(false);
+            jtGuerreiros.getColumnModel().getColumn(3).setResizable(false);
+            jtGuerreiros.getColumnModel().getColumn(4).setResizable(false);
+            jtGuerreiros.getColumnModel().getColumn(5).setResizable(false);
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -326,64 +341,123 @@ public class JFVitima extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbLimparVitimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparVitimaActionPerformed
+    private void jbLimparGuerreiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparGuerreiroActionPerformed
         // TODO add your handling code here:
         limpaCampos();
-    }//GEN-LAST:event_jbLimparVitimaActionPerformed
+    }//GEN-LAST:event_jbLimparGuerreiroActionPerformed
 
-    private void jbSalvarVitimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarVitimaActionPerformed
+    private void jbSalvarGuerreiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarGuerreiroActionPerformed
         // TODO add your handling code here:
-        if (validaInputs()) {
-            Pessoa v = new Pessoa();
-            v.setNome(jtfNomeVitima.getText());
-            v.setOlho(jtfOlhoVitima.getText());
-            v.setCabelo(jtfCabeloVitima.getText());
-            v.setPele(jtfPeleVitima.getText());
-            if (jrbFemininoVitima.isSelected()
-                    && jrbMasculinoVitima.isSelected()) {
-                
-                v.setSexo(!jrbFemininoVitima.isSelected());
-    }//GEN-LAST:event_jbSalvarVitimaActionPerformed
-            VitimasServicos vitimaS = ServicosFactory.getVitimaServicos();
-            vitimaS.cadastrarVitima(v);
+        if (jbSalvarGuerreiro.getText().equals("Salvar")) {
+
+            if (validaInputs()) {
+                Guerreiro g = new Guerreiro();
+                g.setNome(jtfNomeGuerreiro.getText());
+                g.setOlho(jtfOlhoGuerreiro.getText());
+                g.setCabelo(jtfCabeloGuerreiro.getText());
+                g.setPele(jtfPeleGuerreiro.getText());
+                if (jrbFemininoGuerreiro.isSelected()
+                        || jrbMasculinoGuerreiro.isSelected()) {
+
+                    g.setSexo(!jrbFemininoGuerreiro.isSelected());
+    }//GEN-LAST:event_jbSalvarGuerreiroActionPerformed
+                GuerreiroServicos guerreiroS = ServicosFactory.getGuerreiroServicos();
+                guerreiroS.cadastrarGuerreiro(g);
+                addRowToTable();
+                limpaCampos();
+            }
+        } else {
+            //codigo do update
+            Guerreiro lad = new Guerreiro();
+            lad.setId(idEdit);
+            lad.setNome(jtfNomeGuerreiro.getText());
+            lad.setCabelo(jtfCabeloGuerreiro.getText());
+            lad.setOlho(jtfOlhoGuerreiro.getText());
+            lad.setPele(jtfPeleGuerreiro.getText());
+            GuerreiroServicos guerreiroS = ServicosFactory.getGuerreiroServicos();
+            guerreiroS.atualizarGuerreiro(lad);
             addRowToTable();
-            limpaCampos();
+            JOptionPane.showMessageDialog(this, "Guerreiro Aualizada com sucesso!");
+            jbSalvarGuerreiro.setText("Salvar");
+            jLSexoGuerreiro.setVisible(true);
+            jrbFemininoGuerreiro.setVisible(true);
+            jrbMasculinoGuerreiro.setVisible(true);
+            jbLimparGuerreiro.setEnabled(true);
         }
     }
-    private void jtfOlhoVitimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfOlhoVitimaActionPerformed
+    private void jbDefault(){
+        jbSalvarGuerreiro.setText("Salvar");
+            jLSexoGuerreiro.setVisible(true);
+            jrbFemininoGuerreiro.setVisible(true);
+            jrbMasculinoGuerreiro.setVisible(true);
+            jbLimparGuerreiro.setEnabled(true);
+            jbDeletarGuerreiro.setVisible(false);
+            jbDeletarGuerreiro.setText("Deletar");
+            jbEditarGuerreiro.setVisible(false);
+    }
+    private void jtfOlhoGuerreiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfOlhoGuerreiroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jtfOlhoVitimaActionPerformed
+    }//GEN-LAST:event_jtfOlhoGuerreiroActionPerformed
 
-    private void jtVitimasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtVitimasMouseClicked
+    private void jtGuerreirosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtGuerreirosMouseClicked
         // TODO add your handling code here:
-        jbEditarVitima.setVisible(true);
-        jbDeletarVitima.setVisible(true);
-    }//GEN-LAST:event_jtVitimasMouseClicked
+        jbEditarGuerreiro.setVisible(true);
+        jbDeletarGuerreiro.setVisible(true);
+    }//GEN-LAST:event_jtGuerreirosMouseClicked
 
-    private void jbDeletarVitimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeletarVitimaActionPerformed
+    private void jbDeletarGuerreiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeletarGuerreiroActionPerformed
         // TODO add your handling code here:
-        int linha = jtVitimas.getSelectedRow();
-        int id = (int) jtVitimas.getValueAt(linha, 0);
-        String nome = (String) jtVitimas.getValueAt(linha, 1);
+         if (jbDeletarGuerreiro.getText().equals("Deletar")) {
+        int linha = jtGuerreiros.getSelectedRow();
+        int id = (int) jtGuerreiros.getValueAt(linha, 0);
+        String nome = (String) jtGuerreiros.getValueAt(linha, 1);
         Object[] btnMSG = {"Sim", "Não"};
         int resp = JOptionPane.showOptionDialog(this, "Deseja realmente deletar" + nome, ".:Deletar:.", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, btnMSG, btnMSG[0]);
         if (resp == 0) {
-            VitimasServicos vitimaS = ServicosFactory.getVitimaServicos();
-            vitimaS.deletarVitima(id);
+            GuerreiroServicos guerreiroS = ServicosFactory.getGuerreiroServicos();
+            guerreiroS.deletarGuerreiro(id);
             addRowToTable();
-            JOptionPane.showMessageDialog(this, "Vitima" + nome + "deletada com sucesso");
+            JOptionPane.showMessageDialog(this, "Guerreiro" + nome + "deletada com sucesso");
         } else {
             JOptionPane.showMessageDialog(this, "Ok, delete cancelado pelo usuário");
         }
-        jbDeletarVitima.setVisible(false);
-        jbEditarVitima.setVisible(false);
-    }//GEN-LAST:event_jbDeletarVitimaActionPerformed
+        jbDeletarGuerreiro.setVisible(false);
+        jbEditarGuerreiro.setVisible(false);
+        } else {
+            addRowToTable();
+            JOptionPane.showMessageDialog(this, "Edição cancelada com sucesso!");
+            jbDefault();
+            limpaCampos();
+        }
+    }//GEN-LAST:event_jbDeletarGuerreiroActionPerformed
+
+    private void jbEditarGuerreiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbEditarGuerreiroActionPerformed
+        // TODO add your handling code here:
+        jbLimparGuerreiro.setEnabled(false);
+        jbSalvarGuerreiro.setText("Atualizar");
+        jbDeletarGuerreiro.setText("Cancelar");
+        jrbFemininoGuerreiro.setVisible(false);
+        jrbMasculinoGuerreiro.setVisible(false);
+        jLSexoGuerreiro.setVisible(false);
+
+        //buscar guerreiro e carregar nos campos
+        int linha = jtGuerreiros.getSelectedRow();
+        idEdit = (int) jtGuerreiros.getValueAt(linha, 0);
+        GuerreiroServicos guerreiroS = ServicosFactory.getGuerreiroServicos();
+
+        Guerreiro guerreiro = guerreiroS.getGuerreiroById(idEdit);
+        //carrega na tela
+        jtfNomeGuerreiro.setText(guerreiro.getNome());
+        jtfCabeloGuerreiro.setText(guerreiro.getCabelo());
+        jtfOlhoGuerreiro.setText(guerreiro.getOlho());
+        jtfPeleGuerreiro.setText(guerreiro.getPele());
+    }//GEN-LAST:event_jbEditarGuerreiroActionPerformed
 
     /**
      * @param args the command line arguments
@@ -402,27 +476,31 @@ public class JFVitima extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFVitima.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFGuerreiro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFVitima.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFGuerreiro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFVitima.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFGuerreiro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFVitima.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFGuerreiro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFVitima().setVisible(true);
+                new JFGuerreiro().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Olho;
-    private javax.swing.ButtonGroup bgSexoVitima;
+    private javax.swing.ButtonGroup bgSexoGuerreiro;
+    private javax.swing.JLabel jLSexoGuerreiro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -435,16 +513,17 @@ public class JFVitima extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JButton jbDeletarVitima;
-    private javax.swing.JButton jbEditarVitima;
-    private javax.swing.JButton jbLimparVitima;
-    private javax.swing.JButton jbSalvarVitima;
-    private javax.swing.JRadioButton jrbFemininoVitima;
-    private javax.swing.JRadioButton jrbMasculinoVitima;
-    private javax.swing.JTable jtVitimas;
-    private javax.swing.JTextField jtfCabeloVitima;
-    private javax.swing.JTextField jtfNomeVitima;
-    private javax.swing.JTextField jtfOlhoVitima;
-    private javax.swing.JTextField jtfPeleVitima;
+    private javax.swing.JButton jbDeletarGuerreiro;
+    private javax.swing.JButton jbEditarGuerreiro;
+    private javax.swing.JButton jbLimparGuerreiro;
+    private javax.swing.JButton jbSalvarGuerreiro;
+    private javax.swing.JRadioButton jrbFemininoGuerreiro;
+    private javax.swing.JRadioButton jrbMasculinoGuerreiro;
+    private javax.swing.JTable jtGuerreiros;
+    private javax.swing.JTextField jtfArmamento;
+    private javax.swing.JTextField jtfCabeloGuerreiro;
+    private javax.swing.JTextField jtfNomeGuerreiro;
+    private javax.swing.JTextField jtfOlhoGuerreiro;
+    private javax.swing.JTextField jtfPeleGuerreiro;
     // End of variables declaration//GEN-END:variables
 }

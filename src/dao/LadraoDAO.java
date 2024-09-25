@@ -121,4 +121,28 @@ public class LadraoDAO {
         return true;
     }
 
+    public Ladrao getLadraoById(int id) {
+        Ladrao l = new Ladrao();
+        try {
+            Connection con = Conexao.getConexao();
+            String sql = "select * from pessoa " + "where id = ?";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                l.setId(rs.getInt("id"));
+                l.setNome(rs.getString("Nome"));
+                l.setCabelo(rs.getString("Cabelo"));
+                l.setOlho(rs.getString("Olho"));
+                l.setPele(rs.getString("Pele"));
+                l.setSexo(rs.getBoolean("Sexo"));
+                l.setPlanoDeFuga(rs.getString("planoDeFuga"));
+                l.setPontosDeVida(rs.getInt("pontosDeVida"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar Ladrao.\n" + e.getMessage());
+        }
+        return l;
+    }
+
 }

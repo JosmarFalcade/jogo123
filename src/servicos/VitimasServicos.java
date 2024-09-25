@@ -7,6 +7,7 @@ import dao.VitimaDAO;
 import model.Pessoa;
 
 public class VitimasServicos {
+
     VitimaDAO vDAO = DAOFactory.getVitimaDAO();
 
     public void cadastrarVitima(Pessoa vVO) {
@@ -27,5 +28,9 @@ public class VitimasServicos {
 
     public boolean deletarVitima(int id) {
         return vDAO.deletarVitima(id);
+    }
+
+    public Pessoa getVitimaById(int id) {
+        return vDAO.getVitimaById(id);
     }
 }
