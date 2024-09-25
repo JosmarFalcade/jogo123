@@ -5,23 +5,81 @@
  */
 package view;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import model.Ladrao;
+import model.Pessoa;
 import servicos.ServicosFactory;
-import servicos.LadraoServicos;
+import servicos.VitimasServicos;
 
 /**
  *
  * @author 182310075
  */
-public class JFLadrao extends javax.swing.JFrame {
+public class JFVitima extends javax.swing.JFrame {
 
     /**
-     * Creates new form JFLadrao
+     * Creates new form JFVitima
      */
-    public JFLadrao() {
+    public JFVitima() {
         initComponents();
         addRowToTable();
+        jbEditarVitima.setVisible(false);
+        jbDeletarVitima.setVisible(false);
+    }
+    
+    public void addRowToTable() {
+        //pega a modelagem da tabela na interface grafica
+        DefaultTableModel model = (DefaultTableModel) jtVitimas.getModel();
+        model.getDataVector().removeAllElements();//remove as linhas da tabela
+        model.fireTableDataChanged();
+        Object rowData[] = new Object[5];//cria vetor de 5 posicoes que corresponde as colunas da tabela
+        VitimasServicos vitimaS = ServicosFactory.getVitimaServicos();//percorre lista e popula vetor e add vetor a tabela
+        for (Pessoa vitima : vitimaS.listaVitimas()) {
+            rowData[0] = vitima.getId();
+            rowData[1] = vitima.getNome();
+            rowData[2] = vitima.getOlho();
+            rowData[3] = vitima.isSexo() == false ? "Feminino" : "Masculino"; //if Ternary Operator
+            rowData[4] = vitima.getPontosDeVida();
+            model.addRow(rowData);
+        }
+    }
+    
+    private void limpaCampos() {
+        jtfNomeVitima.setText("");
+        jtfCabeloVitima.setText("");
+        jtfOlhoVitima.setText("");
+        jtfPeleVitima.setText("");
+        bgSexoVitima.clearSelection();
+        jtfNomeVitima.requestFocus();
+    }
+    
+    private boolean validaInputs() {
+        if (jtfNomeVitima.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preecher o nome");
+            jtfNomeVitima.requestFocus();
+            return false;
+        }
+        if (jtfCabeloVitima.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preecher o cabelo");
+            jtfCabeloVitima.requestFocus();
+            return false;
+        }
+        if (jtfOlhoVitima.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preecher o olho");
+            jtfOlhoVitima.requestFocus();
+            return false;
+        }
+        if (jtfPeleVitima.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Preecher a pele");
+            jtfPeleVitima.requestFocus();
+            return false;
+        }
+        if (!jrbFemininoVitima.isSelected()
+                && !jrbMasculinoVitima.isSelected()) {
+            JOptionPane.showMessageDialog(this, "Selecionar Sexo");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -33,148 +91,187 @@ public class JFLadrao extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        bgSexoLadrao = new javax.swing.ButtonGroup();
-        jPanel2 = new javax.swing.JPanel();
+        bgSexoVitima = new javax.swing.ButtonGroup();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jLabel2 = new javax.swing.JLabel();
-        jtfNomeLadrao = new javax.swing.JTextField();
+        jtfNomeVitima = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jtfCabeloLadrao = new javax.swing.JTextField();
+        jtfCabeloVitima = new javax.swing.JTextField();
         Olho = new javax.swing.JLabel();
-        jtfOlhoLadrao = new javax.swing.JTextField();
+        jtfOlhoVitima = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jtfPeleLadrao = new javax.swing.JTextField();
+        jtfPeleVitima = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jrbFemininoLadrao = new javax.swing.JRadioButton();
-        jrbMasculinoLadrao = new javax.swing.JRadioButton();
+        jrbFemininoVitima = new javax.swing.JRadioButton();
+        jrbMasculinoVitima = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
-        jbSalvarLadrao = new javax.swing.JButton();
-        jbLimparLadrao = new javax.swing.JButton();
+        jbSalvarVitima = new javax.swing.JButton();
+        jbLimparVitima = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JSeparator();
-        jLabel7 = new javax.swing.JLabel();
-        jtfPlanodefuga = new javax.swing.JTextField();
+        jbDeletarVitima = new javax.swing.JButton();
+        jbEditarVitima = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jtLadroes = new javax.swing.JTable();
+        jtVitimas = new javax.swing.JTable();
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Cadastro do Ladrão");
+        jLabel1.setText("Cadastro de Vitima");
 
         jLabel2.setText("Nome");
 
-        jtfNomeLadrao.setName("jtfNomeLadrao"); // NOI18N
+        jtfNomeVitima.setName("jtfNomeVitima"); // NOI18N
 
         jLabel3.setText("Cabelo");
 
-        jtfCabeloLadrao.setName("jtfCabeloLadrao"); // NOI18N
+        jtfCabeloVitima.setName("jtfCabeloVitima"); // NOI18N
 
         Olho.setText("Olho");
 
+        jtfOlhoVitima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jtfOlhoVitimaActionPerformed(evt);
+            }
+        });
+
         jLabel4.setText("Pele");
 
-        bgSexoLadrao.add(jrbFemininoLadrao);
-        jrbFemininoLadrao.setText("Feminino");
+        bgSexoVitima.add(jrbFemininoVitima);
+        jrbFemininoVitima.setText("Feminino");
 
-        bgSexoLadrao.add(jrbMasculinoLadrao);
-        jrbMasculinoLadrao.setText("Masculino");
+        bgSexoVitima.add(jrbMasculinoVitima);
+        jrbMasculinoVitima.setText("Masculino");
 
         jLabel6.setText("Sexo");
 
-        jbSalvarLadrao.setText("Salvar");
+        jbSalvarVitima.setText("Salvar");
+        jbSalvarVitima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbSalvarVitimaActionPerformed(evt);
+            }
+        });
 
-        jbLimparLadrao.setText("Limpar");
+        jbLimparVitima.setText("Limpar");
+        jbLimparVitima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbLimparVitimaActionPerformed(evt);
+            }
+        });
 
-        jLabel7.setText("Plano de Fuga");
+        jbDeletarVitima.setText("Deletar");
+        jbDeletarVitima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbDeletarVitimaActionPerformed(evt);
+            }
+        });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jbEditarVitima.setText("Editar");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(jSeparator1)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel7))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jtfPlanodefuga, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jtfPeleLadrao, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
-                            .addComponent(jtfCabeloLadrao, javax.swing.GroupLayout.Alignment.LEADING))
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jtfPeleVitima, javax.swing.GroupLayout.DEFAULT_SIZE, 143, Short.MAX_VALUE)
+                            .addComponent(jtfCabeloVitima))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Olho)
                             .addComponent(jLabel6))
                         .addGap(14, 14, 14)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jrbFemininoLadrao)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jrbFemininoVitima)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel5)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(2, 2, 2)
-                                .addComponent(jtfOlhoLadrao, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jtfOlhoVitima, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jrbMasculinoLadrao)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jbLimparLadrao, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jbSalvarLadrao, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(22, 22, 22))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jtfNomeLadrao, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jrbMasculinoVitima)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jtfNomeVitima, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jbEditarVitima, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbDeletarVitima, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbLimparVitima, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jbSalvarVitima, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(22, 22, 22))))
             .addComponent(jSeparator2)
-            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jtfNomeLadrao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfNomeVitima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jtfCabeloLadrao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfCabeloVitima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Olho)
-                    .addComponent(jtfOlhoLadrao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfOlhoVitima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jtfPeleLadrao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfPeleVitima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
-                    .addComponent(jrbFemininoLadrao)
+                    .addComponent(jrbFemininoVitima)
                     .addComponent(jLabel6))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jrbMasculinoLadrao)
-                    .addComponent(jLabel7)
-                    .addComponent(jtfPlanodefuga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jrbMasculinoVitima)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jbSalvarLadrao)
-                    .addComponent(jbLimparLadrao))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jbSalvarVitima)
+                    .addComponent(jbLimparVitima)
+                    .addComponent(jbDeletarVitima)
+                    .addComponent(jbEditarVitima))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jtLadroes.setModel(new javax.swing.table.DefaultTableModel(
+        jtVitimas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -197,7 +294,19 @@ public class JFLadrao extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jtLadroes);
+        jtVitimas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtVitimasMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jtVitimas);
+        if (jtVitimas.getColumnModel().getColumnCount() > 0) {
+            jtVitimas.getColumnModel().getColumn(0).setResizable(false);
+            jtVitimas.getColumnModel().getColumn(1).setResizable(false);
+            jtVitimas.getColumnModel().getColumn(2).setResizable(false);
+            jtVitimas.getColumnModel().getColumn(3).setResizable(false);
+            jtVitimas.getColumnModel().getColumn(4).setResizable(false);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -206,21 +315,75 @@ public class JFLadrao extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 473, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jbLimparVitimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbLimparVitimaActionPerformed
+        // TODO add your handling code here:
+        limpaCampos();
+    }//GEN-LAST:event_jbLimparVitimaActionPerformed
+
+    private void jbSalvarVitimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbSalvarVitimaActionPerformed
+        // TODO add your handling code here:
+        if (validaInputs()) {
+            Pessoa v = new Pessoa();
+            v.setNome(jtfNomeVitima.getText());
+            v.setOlho(jtfOlhoVitima.getText());
+            v.setCabelo(jtfCabeloVitima.getText());
+            v.setPele(jtfPeleVitima.getText());
+            if (jrbFemininoVitima.isSelected()
+                    && jrbMasculinoVitima.isSelected()) {
+                
+                v.setSexo(!jrbFemininoVitima.isSelected());
+    }//GEN-LAST:event_jbSalvarVitimaActionPerformed
+            VitimasServicos vitimaS = ServicosFactory.getVitimaServicos();
+            vitimaS.cadastrarVitima(v);
+            addRowToTable();
+            limpaCampos();
+        }
+    }
+    private void jtfOlhoVitimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfOlhoVitimaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jtfOlhoVitimaActionPerformed
+
+    private void jtVitimasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtVitimasMouseClicked
+        // TODO add your handling code here:
+        jbEditarVitima.setVisible(true);
+        jbDeletarVitima.setVisible(true);
+    }//GEN-LAST:event_jtVitimasMouseClicked
+
+    private void jbDeletarVitimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeletarVitimaActionPerformed
+        // TODO add your handling code here:
+        int linha = jtVitimas.getSelectedRow();
+        int id = (int) jtVitimas.getValueAt(linha, 0);
+        String nome = (String) jtVitimas.getValueAt(linha, 1);
+        Object[] btnMSG = {"Sim", "Não"};
+        int resp = JOptionPane.showOptionDialog(this, "Deseja realmente deletar" + nome, ".:Deletar:.", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, btnMSG, btnMSG[0]);
+        if (resp == 0) {
+            VitimasServicos vitimaS = ServicosFactory.getVitimaServicos();
+            vitimaS.deletarVitima(id);
+            addRowToTable();
+            JOptionPane.showMessageDialog(this, "Vitima" + nome + "deletada com sucesso");
+        } else {
+            JOptionPane.showMessageDialog(this, "Ok, delete cancelado pelo usuário");
+        }
+        jbDeletarVitima.setVisible(false);
+        jbEditarVitima.setVisible(false);
+    }//GEN-LAST:event_jbDeletarVitimaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -239,47 +402,49 @@ public class JFLadrao extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JFLadrao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFVitima.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JFLadrao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFVitima.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JFLadrao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFVitima.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JFLadrao.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JFVitima.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new JFLadrao().setVisible(true);
+                new JFVitima().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Olho;
-    private javax.swing.ButtonGroup bgSexoLadrao;
+    private javax.swing.ButtonGroup bgSexoVitima;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JButton jbLimparLadrao;
-    private javax.swing.JButton jbSalvarLadrao;
-    private javax.swing.JRadioButton jrbFemininoLadrao;
-    private javax.swing.JRadioButton jrbMasculinoLadrao;
-    private javax.swing.JTable jtLadroes;
-    private javax.swing.JTextField jtfCabeloLadrao;
-    private javax.swing.JTextField jtfNomeLadrao;
-    private javax.swing.JTextField jtfOlhoLadrao;
-    private javax.swing.JTextField jtfPeleLadrao;
-    private javax.swing.JTextField jtfPlanodefuga;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JButton jbDeletarVitima;
+    private javax.swing.JButton jbEditarVitima;
+    private javax.swing.JButton jbLimparVitima;
+    private javax.swing.JButton jbSalvarVitima;
+    private javax.swing.JRadioButton jrbFemininoVitima;
+    private javax.swing.JRadioButton jrbMasculinoVitima;
+    private javax.swing.JTable jtVitimas;
+    private javax.swing.JTextField jtfCabeloVitima;
+    private javax.swing.JTextField jtfNomeVitima;
+    private javax.swing.JTextField jtfOlhoVitima;
+    private javax.swing.JTextField jtfPeleVitima;
     // End of variables declaration//GEN-END:variables
 }
