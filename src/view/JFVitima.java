@@ -383,15 +383,16 @@ public class JFVitima extends javax.swing.JFrame {
             jbLimparVitima.setEnabled(true);
         }
     }
-    private void jbDefault(){
+
+    private void jbDefault() {
         jbSalvarVitima.setText("Salvar");
-            jLSexoVitima.setVisible(true);
-            jrbFemininoVitima.setVisible(true);
-            jrbMasculinoVitima.setVisible(true);
-            jbLimparVitima.setEnabled(true);
-            jbDeletarVitima.setVisible(false);
-            jbDeletarVitima.setText("Deletar");
-            jbEditarVitima.setVisible(false);
+        jLSexoVitima.setVisible(true);
+        jrbFemininoVitima.setVisible(true);
+        jrbMasculinoVitima.setVisible(true);
+        jbLimparVitima.setEnabled(true);
+        jbDeletarVitima.setVisible(false);
+        jbDeletarVitima.setText("Deletar");
+        jbEditarVitima.setVisible(false);
     }
     private void jtfOlhoVitimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfOlhoVitimaActionPerformed
         // TODO add your handling code here:
@@ -405,22 +406,22 @@ public class JFVitima extends javax.swing.JFrame {
 
     private void jbDeletarVitimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeletarVitimaActionPerformed
         // TODO add your handling code here:
-         if (jbDeletarVitima.getText().equals("Deletar")) {
-        int linha = jtVitimas.getSelectedRow();
-        int id = (int) jtVitimas.getValueAt(linha, 0);
-        String nome = (String) jtVitimas.getValueAt(linha, 1);
-        Object[] btnMSG = {"Sim", "Não"};
-        int resp = JOptionPane.showOptionDialog(this, "Deseja realmente deletar" + nome, ".:Deletar:.", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, btnMSG, btnMSG[0]);
-        if (resp == 0) {
-            VitimasServicos vitimaS = ServicosFactory.getVitimaServicos();
-            vitimaS.deletarVitima(id);
-            addRowToTable();
-            JOptionPane.showMessageDialog(this, "Vitima" + nome + "deletada com sucesso");
-        } else {
-            JOptionPane.showMessageDialog(this, "Ok, delete cancelado pelo usuário");
-        }
-        jbDeletarVitima.setVisible(false);
-        jbEditarVitima.setVisible(false);
+        if (jbDeletarVitima.getText().equals("Deletar")) {
+            int linha = jtVitimas.getSelectedRow();
+            int id = (int) jtVitimas.getValueAt(linha, 0);
+            String nome = (String) jtVitimas.getValueAt(linha, 1);
+            Object[] btnMSG = {"Sim", "Não"};
+            int resp = JOptionPane.showOptionDialog(this, "Deseja realmente deletar" + nome, ".:Deletar:.", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, btnMSG, btnMSG[0]);
+            if (resp == 0) {
+                VitimasServicos vitimaS = ServicosFactory.getVitimaServicos();
+                vitimaS.deletarVitima(id);
+                addRowToTable();
+                JOptionPane.showMessageDialog(this, "Vitima" + nome + "deletada com sucesso");
+            } else {
+                JOptionPane.showMessageDialog(this, "Ok, delete cancelado pelo usuário");
+            }
+            jbDeletarVitima.setVisible(false);
+            jbEditarVitima.setVisible(false);
         } else {
             addRowToTable();
             JOptionPane.showMessageDialog(this, "Edição cancelada com sucesso!");
@@ -441,9 +442,15 @@ public class JFVitima extends javax.swing.JFrame {
         //buscar vitima e carregar nos campos
         int linha = jtVitimas.getSelectedRow();
         idEdit = (int) jtVitimas.getValueAt(linha, 0);
-        VitimasServicos vitimaS = ServicosFactory.getVitimaServicos();
 
-        Pessoa vitima = vitimaS.getVitimaById(idEdit);
+        Pessoa vitima = new Pessoa();
+        try {
+            VitimasServicos vitimaS = ServicosFactory.getVitimaServicos();
+            vitima = vitimaS.getVitimaById(idEdit);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+
         //carrega na tela
         jtfNomeVitima.setText(vitima.getNome());
         jtfCabeloVitima.setText(vitima.getCabelo());

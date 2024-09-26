@@ -91,16 +91,15 @@ public class GuerreiroDAO {
                     + "olho = ?,"
                     + "cabelo = ?,"
                     + "pele = ?,"
-                    + "armamento = ?,"
-                    + "pontosDeVida = ?"
+                    + "armamento = ? "
                     + " where id = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setString(1, gVO.getNome());
             pst.setString(2, gVO.getOlho());
             pst.setString(3, gVO.getCabelo());
             pst.setString(4, gVO.getPele());
-            pst.setString(6, gVO.getArmamento());
-            pst.setInt(7, gVO.getId());
+            pst.setString(5, gVO.getArmamento());
+            pst.setInt(6, gVO.getId());
             pst.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Erro ao editar guerreiro.\n" + e.getMessage());
@@ -120,11 +119,11 @@ public class GuerreiroDAO {
         return true;
     }
 
-    public Guerreiro getGuerreiroById(int id) {
+    public Guerreiro getGuerreiroById(int id) throws SQLException{
         Guerreiro g = new Guerreiro();
         try {
             Connection con = Conexao.getConexao();
-            String sql = "select * from pessoa " + "where nome like ? and armamento is not null";
+            String sql = "select * from pessoa " + "where id = ?";
             PreparedStatement pst = con.prepareStatement(sql);
             pst.setInt(1, id);
             ResultSet rs = pst.executeQuery();
@@ -139,7 +138,7 @@ public class GuerreiroDAO {
                 g.setPontosDeVida(rs.getInt("pontosDeVida"));
             }
         } catch (SQLException e) {
-            System.out.println("Erro ao buscar Guerreiro.\n" + e.getMessage());
+            throw new SQLException("Erro ao buscar Guerreiro.\n" + e.getMessage());
         }
         return g;
     }

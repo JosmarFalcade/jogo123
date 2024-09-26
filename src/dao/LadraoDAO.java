@@ -97,10 +97,19 @@ public class LadraoDAO {
     public void atualizarLadrao(Ladrao lVO) {
         try {
             Connection con = Conexao.getConexao();
-            String sql = "update pessoa set cabelo = ? where id = ?";
+            String sql = "update pessoa set nome = ?,"
+                    + "olho = ?,"
+                    + "cabelo = ?,"
+                    + "pele = ?,"
+                    + "PlanoDeFuga = ? "
+                    + " where id = ?";
             PreparedStatement pst = con.prepareStatement(sql);
-            pst.setString(1, lVO.getCabelo());
-            pst.setInt(2, lVO.getId());
+            pst.setString(1, lVO.getNome());
+            pst.setString(2, lVO.getOlho());
+            pst.setString(3, lVO.getCabelo());
+            pst.setString(4, lVO.getPele());
+            pst.setString(5, lVO.getPlanoDeFuga());
+            pst.setInt(6, lVO.getId());
             pst.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Erro ao atualizar ladrão. \n" + e.getMessage());
@@ -121,7 +130,7 @@ public class LadraoDAO {
         return true;
     }
 
-    public Ladrao getLadraoById(int id) {
+    public Ladrao getLadraoById(int id) throws SQLException {
         Ladrao l = new Ladrao();
         try {
             Connection con = Conexao.getConexao();
@@ -140,7 +149,7 @@ public class LadraoDAO {
                 l.setPontosDeVida(rs.getInt("pontosDeVida"));
             }
         } catch (SQLException e) {
-            System.out.println("Erro ao buscar Ladrao.\n" + e.getMessage());
+            throw new SQLException("Erro ao buscar Ladrao.\n" + e.getMessage());
         }
         return l;
     }

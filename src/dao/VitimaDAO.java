@@ -93,7 +93,7 @@ public class VitimaDAO {
 
     }
 
-    public Pessoa getVitimaById(int id) {
+    public Pessoa getVitimaById(int id) throws SQLException {
         Pessoa v = new Pessoa();
         try {
             Connection con = Conexao.getConexao();
@@ -114,7 +114,7 @@ public class VitimaDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println("Erro ao buscar vítima. \n" + e.getMessage());
+            throw new SQLException("Erro ao buscar vítima. \n" + e.getMessage());
 
         }
 

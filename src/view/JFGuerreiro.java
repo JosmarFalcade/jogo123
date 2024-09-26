@@ -36,6 +36,7 @@ public class JFGuerreiro extends javax.swing.JFrame {
         model.fireTableDataChanged();
         Object rowData[] = new Object[5];//cria vetor de 5 posicoes que corresponde as colunas da tabela
         GuerreiroServicos guerreiroS = ServicosFactory.getGuerreiroServicos();//percorre lista e popula vetor e add vetor a tabela
+        System.out.println(guerreiroS.listaGuerreiros().toString());
         for (Guerreiro guerreiro : guerreiroS.listaGuerreiros()) {
             rowData[0] = guerreiro.getId();
             rowData[1] = guerreiro.getNome();
@@ -362,6 +363,7 @@ public class JFGuerreiro extends javax.swing.JFrame {
                 g.setOlho(jtfOlhoGuerreiro.getText());
                 g.setCabelo(jtfCabeloGuerreiro.getText());
                 g.setPele(jtfPeleGuerreiro.getText());
+                g.setArmamento(jtfArmamento.getText());
                 if (jrbFemininoGuerreiro.isSelected()
                         || jrbMasculinoGuerreiro.isSelected()) {
 
@@ -374,14 +376,15 @@ public class JFGuerreiro extends javax.swing.JFrame {
             }
         } else {
             //codigo do update
-            Guerreiro lad = new Guerreiro();
-            lad.setId(idEdit);
-            lad.setNome(jtfNomeGuerreiro.getText());
-            lad.setCabelo(jtfCabeloGuerreiro.getText());
-            lad.setOlho(jtfOlhoGuerreiro.getText());
-            lad.setPele(jtfPeleGuerreiro.getText());
+            Guerreiro gue = new Guerreiro();
+            gue.setId(idEdit);
+            gue.setNome(jtfNomeGuerreiro.getText());
+            gue.setCabelo(jtfCabeloGuerreiro.getText());
+            gue.setOlho(jtfOlhoGuerreiro.getText());
+            gue.setPele(jtfPeleGuerreiro.getText());
+            gue.setArmamento(jtfArmamento.getText());
             GuerreiroServicos guerreiroS = ServicosFactory.getGuerreiroServicos();
-            guerreiroS.atualizarGuerreiro(lad);
+            guerreiroS.atualizarGuerreiro(gue);
             addRowToTable();
             JOptionPane.showMessageDialog(this, "Guerreiro Aualizada com sucesso!");
             jbSalvarGuerreiro.setText("Salvar");
@@ -391,15 +394,16 @@ public class JFGuerreiro extends javax.swing.JFrame {
             jbLimparGuerreiro.setEnabled(true);
         }
     }
-    private void jbDefault(){
+
+    private void jbDefault() {
         jbSalvarGuerreiro.setText("Salvar");
-            jLSexoGuerreiro.setVisible(true);
-            jrbFemininoGuerreiro.setVisible(true);
-            jrbMasculinoGuerreiro.setVisible(true);
-            jbLimparGuerreiro.setEnabled(true);
-            jbDeletarGuerreiro.setVisible(false);
-            jbDeletarGuerreiro.setText("Deletar");
-            jbEditarGuerreiro.setVisible(false);
+        jLSexoGuerreiro.setVisible(true);
+        jrbFemininoGuerreiro.setVisible(true);
+        jrbMasculinoGuerreiro.setVisible(true);
+        jbLimparGuerreiro.setEnabled(true);
+        jbDeletarGuerreiro.setVisible(false);
+        jbDeletarGuerreiro.setText("Deletar");
+        jbEditarGuerreiro.setVisible(false);
     }
     private void jtfOlhoGuerreiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfOlhoGuerreiroActionPerformed
         // TODO add your handling code here:
@@ -413,22 +417,22 @@ public class JFGuerreiro extends javax.swing.JFrame {
 
     private void jbDeletarGuerreiroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeletarGuerreiroActionPerformed
         // TODO add your handling code here:
-         if (jbDeletarGuerreiro.getText().equals("Deletar")) {
-        int linha = jtGuerreiros.getSelectedRow();
-        int id = (int) jtGuerreiros.getValueAt(linha, 0);
-        String nome = (String) jtGuerreiros.getValueAt(linha, 1);
-        Object[] btnMSG = {"Sim", "Não"};
-        int resp = JOptionPane.showOptionDialog(this, "Deseja realmente deletar" + nome, ".:Deletar:.", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, btnMSG, btnMSG[0]);
-        if (resp == 0) {
-            GuerreiroServicos guerreiroS = ServicosFactory.getGuerreiroServicos();
-            guerreiroS.deletarGuerreiro(id);
-            addRowToTable();
-            JOptionPane.showMessageDialog(this, "Guerreiro" + nome + "deletada com sucesso");
-        } else {
-            JOptionPane.showMessageDialog(this, "Ok, delete cancelado pelo usuário");
-        }
-        jbDeletarGuerreiro.setVisible(false);
-        jbEditarGuerreiro.setVisible(false);
+        if (jbDeletarGuerreiro.getText().equals("Deletar")) {
+            int linha = jtGuerreiros.getSelectedRow();
+            int id = (int) jtGuerreiros.getValueAt(linha, 0);
+            String nome = (String) jtGuerreiros.getValueAt(linha, 1);
+            Object[] btnMSG = {"Sim", "Não"};
+            int resp = JOptionPane.showOptionDialog(this, "Deseja realmente deletar" + nome, ".:Deletar:.", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, btnMSG, btnMSG[0]);
+            if (resp == 0) {
+                GuerreiroServicos guerreiroS = ServicosFactory.getGuerreiroServicos();
+                guerreiroS.deletarGuerreiro(id);
+                addRowToTable();
+                JOptionPane.showMessageDialog(this, "Guerreiro" + nome + "deletada com sucesso");
+            } else {
+                JOptionPane.showMessageDialog(this, "Ok, delete cancelado pelo usuário");
+            }
+            jbDeletarGuerreiro.setVisible(false);
+            jbEditarGuerreiro.setVisible(false);
         } else {
             addRowToTable();
             JOptionPane.showMessageDialog(this, "Edição cancelada com sucesso!");
@@ -449,9 +453,14 @@ public class JFGuerreiro extends javax.swing.JFrame {
         //buscar guerreiro e carregar nos campos
         int linha = jtGuerreiros.getSelectedRow();
         idEdit = (int) jtGuerreiros.getValueAt(linha, 0);
-        GuerreiroServicos guerreiroS = ServicosFactory.getGuerreiroServicos();
+        Guerreiro guerreiro = new Guerreiro();
+        try {
+            GuerreiroServicos guerreiroS = ServicosFactory.getGuerreiroServicos();
+            guerreiro = guerreiroS.getGuerreiroById(idEdit);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
 
-        Guerreiro guerreiro = guerreiroS.getGuerreiroById(idEdit);
         //carrega na tela
         jtfNomeGuerreiro.setText(guerreiro.getNome());
         jtfCabeloGuerreiro.setText(guerreiro.getCabelo());

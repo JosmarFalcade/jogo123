@@ -34,14 +34,15 @@ public class JFLadrao extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) jtLadroes.getModel();
         model.getDataVector().removeAllElements();//remove as linhas da tabela
         model.fireTableDataChanged();
-        Object rowData[] = new Object[5];//cria vetor de 5 posicoes que corresponde as colunas da tabela
+        Object rowData[] = new Object[6];//cria vetor de 6 posicoes que corresponde as colunas da tabela
         LadraoServicos ladraoS = ServicosFactory.getLadraoServicos();//percorre lista e popula vetor e add vetor a tabela
         for (Ladrao ladrao : ladraoS.listaLadrao()) {
             rowData[0] = ladrao.getId();
             rowData[1] = ladrao.getNome();
             rowData[2] = ladrao.getOlho();
             rowData[3] = ladrao.isSexo() == false ? "Feminino" : "Masculino"; //if Ternary Operator
-            rowData[4] = ladrao.getPontosDeVida();
+            rowData[4] = ladrao.getPlanoDeFuga();
+            rowData[5] = ladrao.getPontosDeVida();
             model.addRow(rowData);
         }
     }
@@ -53,6 +54,7 @@ public class JFLadrao extends javax.swing.JFrame {
         jtfPeleLadrao.setText("");
         bgSexoLadrao.clearSelection();
         jtfNomeLadrao.requestFocus();
+        jtfPlanoDeFuga.setText("");
     }
 
     private boolean validaInputs() {
@@ -362,6 +364,7 @@ public class JFLadrao extends javax.swing.JFrame {
                 l.setOlho(jtfOlhoLadrao.getText());
                 l.setCabelo(jtfCabeloLadrao.getText());
                 l.setPele(jtfPeleLadrao.getText());
+                l.setPlanoDeFuga(jtfPlanoDeFuga.getText());
                 if (jrbFemininoLadrao.isSelected()
                         || jrbMasculinoLadrao.isSelected()) {
 
@@ -380,6 +383,7 @@ public class JFLadrao extends javax.swing.JFrame {
             lad.setCabelo(jtfCabeloLadrao.getText());
             lad.setOlho(jtfOlhoLadrao.getText());
             lad.setPele(jtfPeleLadrao.getText());
+            lad.setPlanoDeFuga(jtfPlanoDeFuga.getText());
             LadraoServicos ladraoS = ServicosFactory.getLadraoServicos();
             ladraoS.atualizarLadrao(lad);
             addRowToTable();
@@ -391,15 +395,16 @@ public class JFLadrao extends javax.swing.JFrame {
             jbLimparLadrao.setEnabled(true);
         }
     }
-    private void jbDefault(){
+
+    private void jbDefault() {
         jbSalvarLadrao.setText("Salvar");
-            jLSexoLadrao.setVisible(true);
-            jrbFemininoLadrao.setVisible(true);
-            jrbMasculinoLadrao.setVisible(true);
-            jbLimparLadrao.setEnabled(true);
-            jbDeletarLadrao.setVisible(false);
-            jbDeletarLadrao.setText("Deletar");
-            jbEditarLadrao.setVisible(false);
+        jLSexoLadrao.setVisible(true);
+        jrbFemininoLadrao.setVisible(true);
+        jrbMasculinoLadrao.setVisible(true);
+        jbLimparLadrao.setEnabled(true);
+        jbDeletarLadrao.setVisible(false);
+        jbDeletarLadrao.setText("Deletar");
+        jbEditarLadrao.setVisible(false);
     }
     private void jtfOlhoLadraoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfOlhoLadraoActionPerformed
         // TODO add your handling code here:
@@ -413,22 +418,22 @@ public class JFLadrao extends javax.swing.JFrame {
 
     private void jbDeletarLadraoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbDeletarLadraoActionPerformed
         // TODO add your handling code here:
-         if (jbDeletarLadrao.getText().equals("Deletar")) {
-        int linha = jtLadroes.getSelectedRow();
-        int id = (int) jtLadroes.getValueAt(linha, 0);
-        String nome = (String) jtLadroes.getValueAt(linha, 1);
-        Object[] btnMSG = {"Sim", "Não"};
-        int resp = JOptionPane.showOptionDialog(this, "Deseja realmente deletar" + nome, ".:Deletar:.", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, btnMSG, btnMSG[0]);
-        if (resp == 0) {
-            LadraoServicos ladraoS = ServicosFactory.getLadraoServicos();
-            ladraoS.deletarLadrao(id);
-            addRowToTable();
-            JOptionPane.showMessageDialog(this, "Ladrao" + nome + "deletado com sucesso");
-        } else {
-            JOptionPane.showMessageDialog(this, "Ok, delete cancelado pelo usuário");
-        }
-        jbDeletarLadrao.setVisible(false);
-        jbEditarLadrao.setVisible(false);
+        if (jbDeletarLadrao.getText().equals("Deletar")) {
+            int linha = jtLadroes.getSelectedRow();
+            int id = (int) jtLadroes.getValueAt(linha, 0);
+            String nome = (String) jtLadroes.getValueAt(linha, 1);
+            Object[] btnMSG = {"Sim", "Não"};
+            int resp = JOptionPane.showOptionDialog(this, "Deseja realmente deletar" + nome, ".:Deletar:.", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, btnMSG, btnMSG[0]);
+            if (resp == 0) {
+                LadraoServicos ladraoS = ServicosFactory.getLadraoServicos();
+                ladraoS.deletarLadrao(id);
+                addRowToTable();
+                JOptionPane.showMessageDialog(this, "Ladrao" + nome + "deletado com sucesso");
+            } else {
+                JOptionPane.showMessageDialog(this, "Ok, delete cancelado pelo usuário");
+            }
+            jbDeletarLadrao.setVisible(false);
+            jbEditarLadrao.setVisible(false);
         } else {
             addRowToTable();
             JOptionPane.showMessageDialog(this, "Edição cancelada com sucesso!");
@@ -449,14 +454,21 @@ public class JFLadrao extends javax.swing.JFrame {
         //buscar ladrao e carregar nos campos
         int linha = jtLadroes.getSelectedRow();
         idEdit = (int) jtLadroes.getValueAt(linha, 0);
-        LadraoServicos ladraoS = ServicosFactory.getLadraoServicos();
 
-        Ladrao ladrao = ladraoS.getLadraoById(idEdit);
+        Ladrao ladrao = new Ladrao();
+        try {
+            LadraoServicos ladraoS = ServicosFactory.getLadraoServicos();
+            ladrao = ladraoS.getLadraoById(idEdit);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+
         //carrega na tela
         jtfNomeLadrao.setText(ladrao.getNome());
         jtfCabeloLadrao.setText(ladrao.getCabelo());
         jtfOlhoLadrao.setText(ladrao.getOlho());
         jtfPeleLadrao.setText(ladrao.getPele());
+        jtfPlanoDeFuga.setText(ladrao.getPlanoDeFuga());
     }//GEN-LAST:event_jbEditarLadraoActionPerformed
 
     /**
